@@ -1,15 +1,61 @@
-import sys
-from random import randint
+import random
 
 class Block(object):
-    def  _init_(self, ):
-        blockNone = 0
-        blockI = 1
-        blockL = 2
-        blockJ = 3
-        blockS = 4
-        blockZ = 5
-        blockT = 6
-        blockO = 7
+    blockNone = 0
+    blockI = 1
+    blockL = 2
+    blockJ = 3
+    blockS = 4
+    blockZ = 5
+    blockT = 6
+    blockO = 7
 
-        shapeCoord = 
+    blockCoords = (
+        ((0, 0), (0, 0), (0, 0), (0, 0)),
+        ((0, 2), (0, 1), (0, 0), (0, -1)),
+        ((0, 1), (0, 0), (0, -1), (1, -1)),
+        ((1, 1), (1, 0), (1, -1), (0, -1)),
+        ((0, 1), (0, 0), (1, 0), (1, -1)),
+        ((1, 1), (1, 0), (0, 0), (0, -1)),
+        ((0, 1), (0, 0), (0, -1), (1, 0)),
+        ((0, 0), (1, 0), (0, -1), (1, -1))
+    )
+
+    def __init__(self, block = 0):
+        self.block = block
+        self.currentCoords = self.blockCoords(block)
+
+    def rotatesRight(self):
+        self.currentCoords = ((-y, x) for (x, y) in self.currentCoords)
+
+    def rotatesLeft(self):
+        self.currentCoords = ((y, -x) for (x, y) in self.currentCoords)
+
+    def getCurrentCoords(self, offsetX, offsetY):
+        return ((x + offsetX, y + offsetY) for (x, y) in self.currentCoords)
+
+class GameData(object):
+    boardWidth = 10
+    boardHeight = 25
+    boardSize = 200
+
+    def __init__(self):
+        self.currentX = -1
+        self.currentY = -1
+        self.currentBlock = Block()
+        self.nextBlock = Block(random.randint(1, 7))
+        self.boardInfo = [0] * GameData.boardWidth * GameData.boardHeight
+
+    def tryMoveDown(self):
+        tmpCoords = self.currentBlock.getCurrentCoords(self.currentX, self.currentY)
+        for (x, y) in tmpCoords:
+            if self.boardInfo[x][y - 1] != False: return True
+            return False
+
+    def tryRotate(self):
+
+
+    def tryMoveSideways(self, direction):
+
+
+    def merge(self):
