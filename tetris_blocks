@@ -1,0 +1,15 @@
+import sys
+from random import randint
+
+class Block(object):
+    def  _init_(self, ):
+        blockNone = 0
+        blockI = 1
+        blockL = 2
+        blockJ = 3
+        blockS = 4
+        blockZ = 5
+        blockT = 6
+        blockO = 7
+
+        shapeCoord = 
