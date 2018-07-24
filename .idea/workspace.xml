@@ -2,7 +2,6 @@
 <project version="4">
   <component name="ChangeListManager">
     <list default="true" id="900b30a1-3c24-49a5-8e08-8d175da8c677" name="Default" comment="">
-      <change beforePath="$PROJECT_DIR$/.idea/workspace.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/workspace.xml" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/tetris_blocks" beforeDir="false" afterPath="$PROJECT_DIR$/tetris_blocks" afterDir="false" />
     </list>
     <option name="EXCLUDED_CONVERTED_TO_IGNORED" value="true" />
@@ -17,12 +16,8 @@
       <file leaf-file-name="tetris_blocks" pinned="false" current-in-tab="true">
         <entry file="file://$PROJECT_DIR$/tetris_blocks">
           <provider selected="true" editor-type-id="text-editor">
-            <state relative-caret-position="195">
-              <caret line="35" lean-forward="true" selection-start-line="35" selection-end-line="35" />
-              <folding>
-                <marker date="1532104893577" expanded="true" signature="1562:1569" ph="..." />
-                <marker date="1532104893577" expanded="true" signature="1606:1613" ph="..." />
-              </folding>
+            <state relative-caret-position="705">
+              <caret line="101" column="59" lean-forward="true" selection-start-line="94" selection-start-column="48" selection-end-line="101" selection-end-column="59" />
             </state>
           </provider>
         </entry>
@@ -188,10 +183,6 @@
       <provider selected="true" editor-type-id="text-editor">
         <state>
           <caret selection-end-line="5" selection-end-column="21" />
-          <folding>
-            <marker date="1532104893577" expanded="true" signature="1562:1569" ph="..." />
-            <marker date="1532104893577" expanded="true" signature="1606:1613" ph="..." />
-          </folding>
         </state>
       </provider>
     </entry>
@@ -200,12 +191,8 @@
     </entry>
     <entry file="file://$PROJECT_DIR$/tetris_blocks">
       <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="195">
-          <caret line="35" lean-forward="true" selection-start-line="35" selection-end-line="35" />
-          <folding>
-            <marker date="1532104893577" expanded="true" signature="1562:1569" ph="..." />
-            <marker date="1532104893577" expanded="true" signature="1606:1613" ph="..." />
-          </folding>
+        <state relative-caret-position="705">
+          <caret line="101" column="59" lean-forward="true" selection-start-line="94" selection-start-column="48" selection-end-line="101" selection-end-column="59" />
         </state>
       </provider>
     </entry>
