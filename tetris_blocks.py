@@ -43,9 +43,9 @@ class Block(object):
 
 
 class GameData(object):
-    boardWidth = 10
-    boardHeight = 25
-    boardSize = 200
+    boardWidth = 20
+    boardHeight = 35
+    boardSize = 700
 
     def __init__(self):
         self.currentX = -1
@@ -97,6 +97,12 @@ class GameData(object):
     def moveSideways(self, direction):
         if self.tryMoveSideways(direction):
             self.currentX += direction
+    
+    def newBlock(self):
+        if (self.tryMoveDown):
+            self.currentBlock = Block()
+        else:
+            self.currentBlock = self.nextBlock()
 
     def merge(self):
         for (x, y) in self.currentBlock.getCurrentCoords():
