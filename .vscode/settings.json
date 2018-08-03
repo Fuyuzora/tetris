@@ -1,4 +1,7 @@
 {
     "python.jediEnabled": false,
     "python.linting.pylintPath": "/anaconda3/bin/pylint",
+    "python.linting.pylintArgs": [
+        "--extention-pkg-whitelist=PyQt5"
+    ]
 }
