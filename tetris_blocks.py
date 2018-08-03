@@ -56,6 +56,9 @@ class GameData(object):
 
     def getBoardInfo(self):
         return self.boardInfo
+    
+    def getCurrectBlockLocation(self):
+        
 
     def tryMoveDown(self):
         for (x, y) in self.currentBlock.getCurrentCoords():
