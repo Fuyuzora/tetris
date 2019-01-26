@@ -16,12 +16,10 @@ class Board(QFrame):
         self.initBoard()
 
     def initBoard(self):
-        print('Board initiated')
         self.score = 0
         BOARD_DATA.clear()
     
     def paintEvent(self, event):
-        print('printEvent triggered')
         painter = QPainter(self)
         # painter.begin()
 
@@ -44,7 +42,6 @@ class Board(QFrame):
         # painter.end()
     
     def updateData(self):
-        print('Board updated')
         # self.msg2Statusbar.emit(str(self.
         # 1score))
         self.update()
@@ -61,7 +58,7 @@ class Tetris(QMainWindow):
     
     def initUI(self):
         self.gridSize = 22
-        self.speed = 500
+        self.speed = 400
 
         self.timer = QBasicTimer()
         self.setFocusPolicy(Qt.StrongFocus)

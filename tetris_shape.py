@@ -91,8 +91,10 @@ class BoardData(object):
     def tryMove(self, shape, direction, x, y):
         for x, y in shape.getCoords(direction, x, y):
             if x >= BoardData.width or x < 0 or y >= BoardData.height or y < 0:
+                print('hit boundary')
                 return False
-            if self.backBoard[x + y * BoardData.width > 0]:
+            if self.backBoard[int(x + y * BoardData.width)] > 0:
+                print('hit other blocks')
                 return False
         return True
     
@@ -122,7 +124,7 @@ class BoardData(object):
 
     def moveDown(self):
         lines = 0
-        # print(self.tryMoveCurrent(self.curDirection, self.curX, self.curY + 1))
+        print(self.tryMoveCurrent(self.curDirection, self.curX, self.curY + 1))
         if self.tryMoveCurrent(self.curDirection, self.curX, self.curY + 1):
             self.curY += 1
         else:
@@ -167,6 +169,7 @@ class BoardData(object):
 
     def mergePiece(self):
         for x, y in self.curShape.getCoords(self.curDirection, self.curX, self.curY):
+            print(self.curShape.shape)
             self.backBoard[int(x + y * BoardData.width)] = self.curShape.shape
         
         self.curX = -1
