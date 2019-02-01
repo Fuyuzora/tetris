@@ -3,6 +3,7 @@ from PyQt5.QtWidgets import QMainWindow, QFrame, QDesktopWidget, QApplication, Q
 from PyQt5.QtCore import Qt, QBasicTimer, pyqtSignal
 from PyQt5.QtGui import QPainter, QColor
 from tetris_shape import Shape, BOARD_DATA
+from tetris_ai import AI
 
 class Board(QFrame):
     # msg2Statusbar = pyqtSignal(str)
@@ -52,6 +53,8 @@ class Tetris(QMainWindow):
         self.isPaused = False
         self.nextMove = None
         self.lastShape = Shape.shapeNone
+        self.isAIEnabled = True
+        self.ai = AI(0.510066, 0.760666, 0.35663, 0.184483)
 
         self.initUI()
     
@@ -97,6 +100,9 @@ class Tetris(QMainWindow):
 
     def timerEvent(self, event):
         if event.timerId() == self.timer.timerId():
+            if self.isAIEnabled:
+                # pass
+                self.nextMove = self.ai.bestMove(BOARD_DATA, 0)
             if self.nextMove:
                 k = 0
                 while BOARD_DATA.curDirection != self.nextMove[0] and k < 4:
@@ -132,6 +138,9 @@ class Tetris(QMainWindow):
             BOARD_DATA.rotateLeft()
         elif key == Qt.Key_Down:
             BOARD_DATA.rotateRight()
+        elif key == Qt.Key_Space:
+            while (BOARD_DATA.moveDown()):
+                pass
         else:
             super(Tetris, self).keyPressEvent(event)
         

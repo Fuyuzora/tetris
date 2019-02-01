@@ -54,40 +54,42 @@ class GameData(object):
         self.nextBlock = Block(random.randint(1, 7))
         self.boardInfo = [0] * GameData.boardWidth * GameData.boardHeight
 
-    def getBoardInfo(self):
-        return self.boardInfo
-    
-    def getCurrectBlockLocation(self):
-        
+    def getCurrentBlock(self):
+        return self.currentBlock
 
     def tryMoveDown(self):
         for (x, y) in self.currentBlock.getCurrentCoords():
-            if self.boardInfo[x + self.currentX][y - 1 + self.currentY] != True: return False
+            if self.boardInfo[x + self.currentX][y - 1 + self.currentY] != True:
+                return False
         return True
 
     def tryRotateLeft(self):
         tmpCoords = self.currentBlock.rotatesLeft(True)
         for (x, y) in tmpCoords:
-            if self.boardInfo[x + self.currentX][y + self.currentY] != True: return False
+            if self.boardInfo[x + self.currentX][y + self.currentY] != True:
+                return False
         return True
 
     def tryRotateRight(self):
         tmpCoords = self.currentBlock.rotatesRight(True)
         for (x, y) in tmpCoords:
-            if self.boardInfo[x + self.currentX][y + self.currentY] != True: return False
+            if self.boardInfo[x + self.currentX][y + self.currentY] != True:
+                return False
         return True
 
     # -1 for left adn 1 for right
     def tryMoveSideways(self, direction):
         tmpCoords = self.currentBlock.getCurrentCoords()
         for (x, y) in tmpCoords:
-            if self.boardInfo[x + direction + self.currentX][y + self.currentY] != True: return False
+            if self.boardInfo[x + direction + self.currentX][y + self.currentY] != True:
+                return False
         return True
 
     def moveDown(self):
         if self.tryMoveDown():
             self.currentY -= 1
-        else: self.merge()
+        else:
+            self.merge()
 
     def rotateRight(self):
         if self.tryRotateRight():
@@ -100,7 +102,7 @@ class GameData(object):
     def moveSideways(self, direction):
         if self.tryMoveSideways(direction):
             self.currentX += direction
-    
+
     def newBlock(self):
         if (self.tryMoveDown):
             self.currentBlock = Block()
@@ -118,7 +120,8 @@ class GameData(object):
         for row in (0, 25):
             rowNum = row
             for col in (0, 10):
-                if self.boardInfo[row][col] != True: break
+                if self.boardInfo[row][col] != True:
+                    break
                 elif col == 9:
                     completed += 1
                     for colNum in (0, 10):

@@ -3,5 +3,6 @@
     "python.linting.pylintPath": "/anaconda3/bin/pylint",
     "python.linting.pylintArgs": [
         "--extention-pkg-whitelist=PyQt5"
-    ]
+    ],
+    "python.linting.pylintEnabled": true
 }

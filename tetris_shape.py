@@ -1,4 +1,4 @@
-import random
+import random, math
 
 
 class Shape(object):
@@ -65,7 +65,7 @@ class Shape(object):
         return (minX, maxX, minY, maxY)
 
 class BoardData(object):
-    width = 10
+    width = 16
     height = 22
 
     def __init__(self):
@@ -88,6 +88,12 @@ class BoardData(object):
     def getCurShapeCoord(self):
         return self.curShape.getCoords(self.curDirection, self.curX, self.curY)
     
+    def getCurrentDirection(self):
+        return self.curDirection
+    
+    def getWidth(self):
+        return self.width
+    
     def tryMove(self, shape, direction, x, y):
         for x, y in shape.getCoords(direction, x, y):
             if x >= BoardData.width or x < 0 or y >= BoardData.height or y < 0:
@@ -105,7 +111,7 @@ class BoardData(object):
         minX, maxX, minY, maxY = self.nextShape.getBoundingOffsets(0)
         result = False
         if self.tryMoveCurrent(0, self.width / 2, -minY):
-            print('getting new piece')
+            # print('getting new piece')
             self.curX = self.width / 2
             self.curY = -minY
             self.curDirection = 0
@@ -124,22 +130,26 @@ class BoardData(object):
 
     def moveDown(self):
         lines = 0
-        print(self.tryMoveCurrent(self.curDirection, self.curX, self.curY + 1))
         if self.tryMoveCurrent(self.curDirection, self.curX, self.curY + 1):
             self.curY += 1
+            return True
         else:
             self.mergePiece()
             lines = self.removeFilledLines()
             self.createNewPiece()
-        return lines
+            return False
     
     def moveLeft(self):
         if self.tryMoveCurrent(self.curDirection, self.curX - 1, self.curY):
             self.curX -= 1
+            return True
+        return False
     
     def moveRight(self):
         if self.tryMoveCurrent(self.curDirection, self.curX + 1, self.curY):
             self.curX += 1
+            return True
+        return False
     
     def rotateRight(self):
         if self.tryMoveCurrent((self.curDirection + 1) % 4, self.curX, self.curY):
@@ -169,7 +179,6 @@ class BoardData(object):
 
     def mergePiece(self):
         for x, y in self.curShape.getCoords(self.curDirection, self.curX, self.curY):
-            print(self.curShape.shape)
             self.backBoard[int(x + y * BoardData.width)] = self.curShape.shape
         
         self.curX = -1
@@ -183,5 +192,50 @@ class BoardData(object):
         self.curDirection = 0
         self.curShape = Shape()
         self.backBoard = [0] * BoardData.width * BoardData.height
+    
+    def aggregatedHeight(self):
+        board = self.getData()
+        h = 0
+        for c in range(self.width):
+            h += self.columnHeight(c)
+        return h
+
+    def columnHeight(self, c):
+        board = self.getData()
+        h = 0
+        for r in range(self.height):
+            if board[r + c * self.width] != 0:
+                h += 1
+        return h
+
+    def bumpiness(self):
+        total = 0
+        for c in range(self.width - 1):
+            total += abs(self.columnHeight(c) - self.columnHeight(c+1))
+        return total
+    
+    def holes(self):
+        count = 0
+        for c in range(self.width):
+            block = False
+            for r in range(self.height):
+                if self.backBoard[r + c * self.width] != 0:
+                    block = True
+                elif (self.backBoard[r + c * self.width] == 0 and block):
+                    count += 1
+        return count
+    
+    def isLine(self, r):
+        for c in range(self.width):
+            if (self.backBoard[r + c * self.width] == 0):
+                return False
+        return True
+
+    def lines(self):
+        count = 0
+        for r in range(self.height):
+            if (self.isLine(r)):
+                count += 1
+        return count
 
 BOARD_DATA = BoardData()
