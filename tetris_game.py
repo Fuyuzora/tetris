@@ -2,7 +2,6 @@ import sys, random
 from PyQt5.QtWidgets import QMainWindow, QFrame, QDesktopWidget, QApplication, QHBoxLayout, QLabel
 from PyQt5.QtCore import Qt, QBasicTimer, pyqtSignal
 from PyQt5.QtGui import QPainter, QColor
-
 from tetris_shape import Shape, BOARD_DATA
 
 class Board(QFrame):
