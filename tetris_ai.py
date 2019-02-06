@@ -19,28 +19,35 @@ class AI:
             while (board.getCurrentDirection() != rotation):
                 # board: middle, rotated, not dropped
                 board.rotateRight()
+                print("rotating")
             # BD: far left, rotated, not dropped   
             BD = copy.deepcopy(board)
             while (BD.moveLeft()):
                 pass  
-            for i in range(2):
+            while(BD.moveRight()):
                 # boardData: rotated, moved to right but not dropped
                 boardData = copy.deepcopy(BD)
                 # boardData: rotated, righted and dropped
                 boardDataDropped = copy.deepcopy(boardData)
-                while (boardDataDropped.moveDown()):
+                while (boardDataDropped.moveDown(True)):
                     pass
-                if index == self.depth - 1:
-                    score = \
-                        - self.heightWeight * boardDataDropped.aggregatedHeight() \
-                        + self.linesWeight * boardDataDropped.lines() \
-                        - self.holesWeight * boardDataDropped.holes() \
-                        - self.bumpinessWeight * boardDataDropped.bumpiness()
-                else:
-                    score = self.bestMove(BOARD_DATA, index+1)
+                score = \
+                    - self.heightWeight * boardDataDropped.aggregatedHeight() \
+                    + self.linesWeight * boardDataDropped.lines() \
+                    - self.holesWeight * boardDataDropped.holes() \
+                    - self.bumpinessWeight * boardDataDropped.bumpiness()
+                # if index == self.depth - 1:
+                #     score = \
+                #         - self.heightWeight * boardDataDropped.aggregatedHeight() \
+                #         + self.linesWeight * boardDataDropped.lines() \
+                #         - self.holesWeight * boardDataDropped.holes() \
+                #         - self.bumpinessWeight * boardDataDropped.bumpiness()
+                # else:
+                #     score = self.bestMove(BOARD_DATA, index+1)
                 if bestScore == None or score > bestScore:
                     bestScore = score
                     best[0] = rotation
-                    best[1] = i
+                    best[1] = boardData.curX
                 boardData.moveRight()
+        sys.exit()
         return best

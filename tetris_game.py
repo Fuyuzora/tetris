@@ -7,7 +7,7 @@ from tetris_ai import AI
 
 class Board(QFrame):
     # msg2Statusbar = pyqtSignal(str)
-    speed = 1000
+    # speed = 400
 
     def __init__(self, parent, gridSize):
         super().__init__(parent)
@@ -53,6 +53,7 @@ class Tetris(QMainWindow):
         self.isPaused = False
         self.nextMove = None
         self.lastShape = Shape.shapeNone
+        # self.isAIEnabled = False
         self.isAIEnabled = True
         self.ai = AI(0.510066, 0.760666, 0.35663, 0.184483)
 
@@ -60,7 +61,7 @@ class Tetris(QMainWindow):
     
     def initUI(self):
         self.gridSize = 22
-        self.speed = 400
+        self.speed = 100
 
         self.timer = QBasicTimer()
         self.setFocusPolicy(Qt.StrongFocus)
@@ -89,8 +90,6 @@ class Tetris(QMainWindow):
         self.tboard.score = 0
         BOARD_DATA.clear()
 
-        # self.tboard.msg2Statusbar.emit(str(self.tboard.score))
-
         BOARD_DATA.createNewPiece()
         self.timer.start(self.speed, self)
     
@@ -104,6 +103,10 @@ class Tetris(QMainWindow):
                 # pass
                 self.nextMove = self.ai.bestMove(BOARD_DATA, 0)
             if self.nextMove:
+                # print("=================before======================")
+                # print("curx: " + str(BOARD_DATA.curX))
+                # print("bestX: " + str(self.nextMove[1]))
+                # print("curY: "+str(BOARD_DATA.curY))
                 k = 0
                 while BOARD_DATA.curDirection != self.nextMove[0] and k < 4:
                     BOARD_DATA.rotateRight()
@@ -115,8 +118,11 @@ class Tetris(QMainWindow):
                     elif BOARD_DATA.curX < self.nextMove[1]:
                         BOARD_DATA.moveRight()
                     k += 1
-            lines = BOARD_DATA.moveDown()
-            self.tboard.score += lines
+                # print("=================after=======================")
+                # print("curx: " + str(BOARD_DATA.curX))
+                # print("bestX: " + str(self.nextMove[1]))
+                # print("curY: "+str(BOARD_DATA.curY))
+            BOARD_DATA.moveDown(False)
             if self.lastShape != BOARD_DATA.curShape:
                 self.nextMove = None
                 self.lastShape = BOARD_DATA.curShape
@@ -133,13 +139,14 @@ class Tetris(QMainWindow):
         if key == Qt.Key_Left:
             BOARD_DATA.moveLeft()
         elif key == Qt.Key_Right:
+            print(BOARD_DATA.curX)
             BOARD_DATA.moveRight()
         elif key == Qt.Key_Up:
             BOARD_DATA.rotateLeft()
         elif key == Qt.Key_Down:
             BOARD_DATA.rotateRight()
         elif key == Qt.Key_Space:
-            while (BOARD_DATA.moveDown()):
+            while (BOARD_DATA.moveDown(False)):
                 pass
         else:
             super(Tetris, self).keyPressEvent(event)

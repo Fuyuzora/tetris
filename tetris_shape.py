@@ -96,11 +96,23 @@ class BoardData(object):
     
     def tryMove(self, shape, direction, x, y):
         for x, y in shape.getCoords(direction, x, y):
-            if x >= BoardData.width or x < 0 or y >= BoardData.height or y < 0:
-                print('hit boundary')
+            if x >= BoardData.width:
+                # print('hit right boundary')
                 return False
+            elif x < 0:
+                # print('hit left boundary')
+                return False
+            elif y < 0:
+                # print('hit upper boundary')
+                return False
+            elif y >= BoardData.height:
+                # print('hit lower boundary, current y = '+str(y))
+                return False
+            # if x >= BoardData.width or x < 0 or y < 0 or y >= BoardData.height:
+            #     print('hit boundary')
+                # return False
             if self.backBoard[int(x + y * BoardData.width)] > 0:
-                print('hit other blocks')
+                # print('hit other blocks at row:'+str(y)+'col: '+str(x))
                 return False
         return True
     
@@ -108,12 +120,12 @@ class BoardData(object):
         return self.tryMove(self.curShape, direction, x, y)
     
     def createNewPiece(self):
+        # print("new piece created")
         minX, maxX, minY, maxY = self.nextShape.getBoundingOffsets(0)
         result = False
         if self.tryMoveCurrent(0, self.width / 2, -minY):
-            # print('getting new piece')
             self.curX = self.width / 2
-            self.curY = -minY
+            self.curY = -minY + 1
             self.curDirection = 0
             self.curShape = self.nextShape
             self.nextShape = Shape(random.randint(1, 7))
@@ -128,14 +140,15 @@ class BoardData(object):
         self.shapeStatus[self.curShape.shape] += 1
         return result 
 
-    def moveDown(self):
-        lines = 0
+    def moveDown(self, ai):
         if self.tryMoveCurrent(self.curDirection, self.curX, self.curY + 1):
             self.curY += 1
             return True
         else:
             self.mergePiece()
-            lines = self.removeFilledLines()
+            if not ai:
+                # print("non-ai call")
+                self.removeFilledLines()
             self.createNewPiece()
             return False
     
@@ -204,7 +217,7 @@ class BoardData(object):
         board = self.getData()
         h = 0
         for r in range(self.height):
-            if board[r + c * self.width] != 0:
+            if board[c + r * self.width] != 0:
                 h += 1
         return h
 
@@ -219,15 +232,15 @@ class BoardData(object):
         for c in range(self.width):
             block = False
             for r in range(self.height):
-                if self.backBoard[r + c * self.width] != 0:
+                if self.backBoard[c + r * self.width] != 0:
                     block = True
-                elif (self.backBoard[r + c * self.width] == 0 and block):
+                elif (self.backBoard[c + r * self.width] == 0 and block):
                     count += 1
         return count
     
     def isLine(self, r):
         for c in range(self.width):
-            if (self.backBoard[r + c * self.width] == 0):
+            if (self.backBoard[c + r * self.width] == 0):
                 return False
         return True
 
@@ -236,6 +249,8 @@ class BoardData(object):
         for r in range(self.height):
             if (self.isLine(r)):
                 count += 1
+        # print("AI call")
+        self.removeFilledLines()
         return count
 
 BOARD_DATA = BoardData()
