@@ -120,7 +120,6 @@ class BoardData(object):
         return self.tryMove(self.curShape, direction, x, y)
     
     def createNewPiece(self):
-        # print("new piece created")
         minX, maxX, minY, maxY = self.nextShape.getBoundingOffsets(0)
         result = False
         if self.tryMoveCurrent(0, self.width / 2, -minY):
@@ -147,7 +146,6 @@ class BoardData(object):
         else:
             self.mergePiece()
             if not ai:
-                # print("non-ai call")
                 self.removeFilledLines()
             self.createNewPiece()
             return False
@@ -249,7 +247,6 @@ class BoardData(object):
         for r in range(self.height):
             if (self.isLine(r)):
                 count += 1
-        # print("AI call")
         self.removeFilledLines()
         return count
 

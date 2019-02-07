@@ -100,13 +100,9 @@ class Tetris(QMainWindow):
     def timerEvent(self, event):
         if event.timerId() == self.timer.timerId():
             if self.isAIEnabled:
-                # pass
                 self.nextMove = self.ai.bestMove(BOARD_DATA, 0)
+                print(self.nextMove)
             if self.nextMove:
-                # print("=================before======================")
-                # print("curx: " + str(BOARD_DATA.curX))
-                # print("bestX: " + str(self.nextMove[1]))
-                # print("curY: "+str(BOARD_DATA.curY))
                 k = 0
                 while BOARD_DATA.curDirection != self.nextMove[0] and k < 4:
                     BOARD_DATA.rotateRight()
@@ -118,10 +114,6 @@ class Tetris(QMainWindow):
                     elif BOARD_DATA.curX < self.nextMove[1]:
                         BOARD_DATA.moveRight()
                     k += 1
-                # print("=================after=======================")
-                # print("curx: " + str(BOARD_DATA.curX))
-                # print("bestX: " + str(self.nextMove[1]))
-                # print("curY: "+str(BOARD_DATA.curY))
             BOARD_DATA.moveDown(False)
             if self.lastShape != BOARD_DATA.curShape:
                 self.nextMove = None
@@ -139,7 +131,6 @@ class Tetris(QMainWindow):
         if key == Qt.Key_Left:
             BOARD_DATA.moveLeft()
         elif key == Qt.Key_Right:
-            print(BOARD_DATA.curX)
             BOARD_DATA.moveRight()
         elif key == Qt.Key_Up:
             BOARD_DATA.rotateLeft()
@@ -175,4 +166,5 @@ if __name__ == '__main__':
     # random.seed(32)
     app = QApplication([])
     tetris = Tetris()
+    print("Game Start!")
     sys.exit(app.exec_())
