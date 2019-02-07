@@ -166,5 +166,4 @@ if __name__ == '__main__':
     # random.seed(32)
     app = QApplication([])
     tetris = Tetris()
-    print("Game Start!")
     sys.exit(app.exec_())

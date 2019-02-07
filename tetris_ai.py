@@ -48,7 +48,7 @@ class AI:
                 #         - self.bumpinessWeight * boardDataDropped.bumpiness()
                 # else:
                 #     score = self.bestMove(BOARD_DATA, index+1)
-                
+
                 if bestScore == None or score > bestScore:
                     bestScore = score
                     best[0] = rotation
